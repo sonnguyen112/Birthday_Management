@@ -50,7 +50,7 @@ def save_data():
 def write_bat():
     USER = getpass.getuser()
     file_bat = open(f"C:\\Users\\{USER}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\findBirthday.bat", "w", encoding="utf-8")
-    file_bat.write(f"start {Path(__file__).parent}/findBirthday.pyw")
+    file_bat.write(f"start {Path(__file__).parent}\\findBirthday.pyw")
     file_bat.close()
 
 try:
