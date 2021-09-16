@@ -140,19 +140,6 @@ try:
         588.0,
         image=entry_image_2
     )
-    entry_month = Entry(
-        bd=0,
-        bg="#C8D075",
-        highlightthickness=0,
-        font = ("ink Free", 40)
-    )
-    entry_month.place(
-        x=451.0,
-        y=540.0,
-        width=75.0,
-        height=94.0
-    )
-
     button_image_1 = PhotoImage(
         file=relative_to_assets("button_1.png"))
     save_button = Button(
@@ -203,6 +190,18 @@ try:
         843.0,
         587.5,
         image=entry_image_4
+    )
+    entry_month = Entry(
+        bd=0,
+        bg="#C8D075",
+        highlightthickness=0,
+        font = ("ink Free", 40)
+    )
+    entry_month.place(
+        x=451.0,
+        y=540.0,
+        width=75.0,
+        height=94.0
     )
     entry_year = Entry(
         bd=0,
