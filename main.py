@@ -82,6 +82,7 @@ try:
 
     window.geometry("1000x800")
     window.configure(bg = "#2A0404")
+    window.title("Birthday Management")
     iconPhoto = PhotoImage(file = "assets/cake.png")
     window.iconphoto(False, iconPhoto)
 
