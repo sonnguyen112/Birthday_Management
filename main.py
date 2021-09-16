@@ -9,9 +9,15 @@ from pathlib import Path
 # Explicit imports to satisfy Flake8
 from tkinter import *
 import getpass
+import os
+import sys
 
-
-OUTPUT_PATH = Path(__file__).parent
+# determine if the application is a frozen `.exe` (e.g. pyinstaller --onefile) 
+if getattr(sys, 'frozen', False):
+    OUTPUT_PATH = os.path.dirname(sys.executable)
+# or a script file (e.g. `.py` / `.pyw`)
+elif __file__:
+    OUTPUT_PATH = os.path.dirname(__file__)
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
 
@@ -20,37 +26,54 @@ def relative_to_assets(path: str) -> Path:
 
 #main functions
 def check_input_valid():
-    name = entry_name.get()
-    day = int(entry_day.get())
-    month = int(entry_month.get())
-    year = int(entry_year.get())
-    if (name != "" and day != "" and month != "" and year != ""):
-        if (1000 <= year <= 10000):
-            if (month == 1 or month == 3 or month == 5 or month == 7 or month == 8 or month == 10 or month == 12):
-                if (1 <= day <= 31):
-                    return True
-            elif (month == 4 or month == 6 or month == 9 or month == 11):
-                if (1 <= day <= 30):
-                    return True
-            elif (month == 2):
-                if ((year % 4 == 0) and (year % 100 != 0) or (year % 400 == 0)):
-                    if (1 <= day <= 28):
+    try:
+        name = entry_name.get()
+        day = int(entry_day.get())
+        month = int(entry_month.get())
+        year = int(entry_year.get())
+        if (name != "" and day != "" and month != "" and year != ""):
+            if (1000 <= year <= 10000):
+                if (month == 1 or month == 3 or month == 5 or month == 7 or month == 8 or month == 10 or month == 12):
+                    if (1 <= day <= 31):
                         return True
-                else:
-                    if (1 <= day <= 29):
+                elif (month == 4 or month == 6 or month == 9 or month == 11):
+                    if (1 <= day <= 30):
                         return True
-    return False
+                elif (month == 2):
+                    if ((year % 4 == 0) and (year % 100 != 0) or (year % 400 == 0)):
+                        if (1 <= day <= 28):
+                            return True
+                    else:
+                        if (1 <= day <= 29):
+                            return True
+        return False
+    except:
+        return False
 
 def save_data():
     if (check_input_valid()):
-        file_w = open(f"{Path(__file__).parent}/data.txt", "a", encoding="utf-8")
+        # determine if the application is a frozen `.exe` (e.g. pyinstaller --onefile) 
+        if getattr(sys, 'frozen', False):
+            file_w = open(f"{os.path.dirname(sys.executable)}/data.txt", "a", encoding="utf-8")
+        # or a script file (e.g. `.py` / `.pyw`)
+        elif __file__:
+            file_w = open(f"{os.path.dirname(__file__)}/data.txt", "a", encoding="utf-8")
         file_w.write(f"{entry_name.get()}_{entry_day.get()}/{entry_month.get()}/{entry_year.get()}\n")
         file_w.close()
+    entry_name.delete(0, END)
+    entry_day.delete(0, END)
+    entry_month.delete(0, END)
+    entry_year.delete(0, END)
 
 def write_bat():
     USER = getpass.getuser()
     file_bat = open(f"C:\\Users\\{USER}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\findBirthday.bat", "w", encoding="utf-8")
-    file_bat.write(f"start {Path(__file__).parent}\\findBirthday.pyw")
+    # determine if the application is a frozen `.exe` (e.g. pyinstaller --onefile) 
+    if getattr(sys, 'frozen', False):
+        file_bat.write(f"start {os.path.dirname(sys.executable)}\\findBirthday.pyw")
+    # or a script file (e.g. `.py` / `.pyw`)
+    elif __file__:
+        file_bat.write(f"start {os.path.dirname(__file__)}\\findBirthday.pyw")
     file_bat.close()
 
 try:
@@ -59,6 +82,8 @@ try:
 
     window.geometry("1000x800")
     window.configure(bg = "#2A0404")
+    iconPhoto = PhotoImage(file = "assets/cake.png")
+    window.iconphoto(False, iconPhoto)
 
 
     canvas = Canvas(

@@ -21,6 +21,8 @@ def open_new_window():
 
     window.geometry("750x769")
     window.configure(bg = "#9FC6A6")
+    iconPhoto = PhotoImage(file = "assets/cake.png")
+    window.iconphoto(False, iconPhoto)
 
 
     canvas = Canvas(
