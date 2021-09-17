@@ -11,6 +11,17 @@ from tkinter import *
 import getpass
 import os
 import sys
+import ctypes
+import os
+import win32process
+
+#Turn off terminal
+hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
+if hwnd != 0:      
+    ctypes.windll.user32.ShowWindow(hwnd, 0)      
+    ctypes.windll.kernel32.CloseHandle(hwnd)
+    _, pid = win32process.GetWindowThreadProcessId(hwnd)
+    os.system('taskkill /PID ' + str(pid) + ' /f')
 
 # determine if the application is a frozen `.exe` (e.g. pyinstaller --onefile) 
 if getattr(sys, 'frozen', False):
@@ -70,10 +81,10 @@ def write_bat():
     file_bat = open(f"C:\\Users\\{USER}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\findBirthday.bat", "w", encoding="utf-8")
     # determine if the application is a frozen `.exe` (e.g. pyinstaller --onefile) 
     if getattr(sys, 'frozen', False):
-        file_bat.write(f"start {os.path.dirname(sys.executable)}\\findBirthday.pyw")
+        file_bat.write(f"python {os.path.dirname(sys.executable)}\\findBirthday.pyw")
     # or a script file (e.g. `.py` / `.pyw`)
     elif __file__:
-        file_bat.write(f"start {os.path.dirname(__file__)}\\findBirthday.pyw")
+        file_bat.write(f"python {os.path.dirname(__file__)}\\findBirthday.pyw")
     file_bat.close()
 
 try:
