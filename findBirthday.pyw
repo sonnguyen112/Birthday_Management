@@ -107,9 +107,11 @@ def gen_output_arr():
     file_data.close()
 
 def job():
+    global output_data
     gen_output_arr()
     if (len(output_data) > 0):
         open_new_window()
+        output_data = []
 
 job()
 schedule.every().day.at("08:00").do(job)
