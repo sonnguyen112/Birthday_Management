@@ -4,6 +4,17 @@ from tkinter import *
 from pygame import mixer
 import schedule
 import time
+import ctypes
+import os
+import win32process
+
+#Turn off terminal
+hwnd = ctypes.windll.kernel32.GetConsoleWindow()      
+if hwnd != 0:      
+    ctypes.windll.user32.ShowWindow(hwnd, 0)      
+    ctypes.windll.kernel32.CloseHandle(hwnd)
+    _, pid = win32process.GetWindowThreadProcessId(hwnd)
+    os.system('taskkill /PID ' + str(pid) + ' /f')
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
