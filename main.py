@@ -41,10 +41,10 @@ def check_input_valid():
                         return True
                 elif (month == 2):
                     if ((year % 4 == 0) and (year % 100 != 0) or (year % 400 == 0)):
-                        if (1 <= day <= 28):
+                        if (1 <= day <= 29):
                             return True
                     else:
-                        if (1 <= day <= 29):
+                        if (1 <= day <= 28):
                             return True
         return False
     except:
